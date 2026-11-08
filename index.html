@@ -2,362 +2,172 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Star Truck Space | Design tools for pulsed fusion propulsion</title>
-<meta name="description" content="Star Truck Space builds GPU-accelerated simulation and AI design tools for pulsed fusion space propulsion. Based in Israel.">
-<meta property="og:title" content="Star Truck Space">
-<meta property="og:description" content="GPU-accelerated design tools for pulsed fusion propulsion.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#F3F5F9; --surface:#FFFFFF; --ink:#0B1426; --muted:#4A5873; --line:#D5DCE8;
-  --plasma:#C9540A; --plasma-soft:#FBE3D2; --data:#1C6A9E; --glow:#C9540A;
-  color-scheme:light;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#0B1426; --surface:#15223D; --ink:#FFFFFF; --muted:#A9B6CC; --line:#24345A;
-    --plasma:#FF7A1A; --plasma-soft:#3A2414; --data:#7FD1FF; --glow:#FF9A4D;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0B1426; --surface:#15223D; --ink:#FFFFFF; --muted:#A9B6CC; --line:#24345A;
-  --plasma:#FF7A1A; --plasma-soft:#3A2414; --data:#7FD1FF; --glow:#FF9A4D;
-  color-scheme:dark;
-}
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-stretch:100%;font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
-img,svg,canvas{max-width:100%;display:block}
-a{color:var(--data)}
-a:focus-visible,button:focus-visible{outline:3px solid var(--plasma);outline-offset:3px;border-radius:4px}
-.wrap{width:min(1120px,100% - 48px);margin-inline:auto}
-.display{font-stretch:125%;font-weight:800;letter-spacing:-0.01em;line-height:1.02;text-transform:uppercase}
-h2.display{font-size:clamp(2rem,5vw,3.6rem);margin:0 0 24px;max-width:18ch}
-p{max-width:62ch}
-.lead{font-size:1.2rem;color:var(--muted)}
-
-/* header */
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-header .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-stretch:125%;text-transform:uppercase;font-size:.95rem;letter-spacing:.02em;white-space:nowrap}
-.logo svg{width:28px;height:28px}
-nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
-nav a{color:var(--muted);text-decoration:none;font-size:.95rem}
-nav a:hover{color:var(--ink)}
-.btn{display:inline-block;padding:12px 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:1rem;border:2px solid var(--plasma);transition:background .2s,color .2s}
-.btn-primary{background:var(--plasma);color:#fff}
-.btn-primary:hover{background:transparent;color:var(--plasma)}
-.btn-ghost{color:var(--ink);border-color:var(--line)}
-.btn-ghost:hover{border-color:var(--ink)}
-header .btn{padding:9px 18px;font-size:.9rem}
-@media (max-width:860px){nav{display:none}}
-
-/* hero */
-.hero{position:relative;min-height:calc(100vh - 68px);min-height:calc(100svh - 68px);display:flex;align-items:center;overflow:hidden}
-#plasma{position:absolute;inset:0;width:100%;height:100%}
-.hero .wrap{position:relative;padding:72px 0}
-.hero h1{font-size:clamp(2.8rem,9vw,7rem);margin:0 0 28px;max-width:11ch}
-.hero .lead{max-width:44ch;margin:0 0 36px}
-.hero .actions{display:flex;gap:14px;flex-wrap:wrap}
-
-section{padding:112px 0;border-top:1px solid var(--line)}
-
-/* problem */
-.compare{margin-top:48px;display:grid;gap:22px;max-width:760px}
-.row-label{display:flex;justify-content:space-between;font-size:.95rem;color:var(--muted);margin-bottom:8px}
-.row-label strong{color:var(--ink)}
-.bar{height:18px;border-radius:9px;background:var(--line);position:relative;overflow:hidden}
-.bar span{position:absolute;inset:0 auto 0 0;border-radius:9px}
-.bar .chem{width:100%;background:var(--muted)}
-.bar .fusion{width:14%;background:repeating-linear-gradient(90deg,var(--plasma) 0 10px,transparent 10px 16px);outline:2px solid var(--plasma);outline-offset:-2px}
-.note{font-size:.9rem;color:var(--muted);margin-top:14px}
-
-/* steps */
-.steps{list-style:none;margin:56px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:s}
-.steps li{padding:0 28px 0 0;position:relative}
-.steps li::before{counter-increment:s;content:counter(s);display:block;font-stretch:125%;font-weight:800;font-size:3rem;color:var(--plasma);line-height:1;margin-bottom:18px}
-.steps li::after{content:"";position:absolute;top:22px;left:56px;right:28px;height:2px;background:var(--line)}
-.steps li:last-child::after{display:none}
-.steps h3{margin:0 0 8px;font-size:1.25rem}
-.steps p{margin:0;color:var(--muted);font-size:1rem}
-@media (max-width:860px){.steps{grid-template-columns:1fr 1fr;row-gap:40px}.steps li::after{display:none}}
-@media (max-width:520px){.steps{grid-template-columns:1fr}}
-
-/* engine */
-.engine{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center;margin-top:40px}
-.engine-fig{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px}
-.parts{list-style:none;margin:0;padding:0;display:grid;gap:22px}
-.parts li{border-left:0;padding:0}
-.parts h3{margin:0 0 4px;font-size:1.15rem;display:flex;align-items:center;gap:10px}
-.parts h3 i{width:12px;height:12px;border-radius:50%;background:var(--plasma);display:inline-block;flex:none}
-.parts p{margin:0;color:var(--muted);font-size:1rem}
-@media (max-width:860px){.engine{grid-template-columns:1fr}}
-
-/* tech */
-.tech{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:48px}
-.tech div{background:var(--bg);padding:32px}
-.tech h3{margin:0 0 6px;font-size:1.2rem}
-.tech p{margin:0;color:var(--muted);font-size:1rem}
-@media (max-width:640px){.tech{grid-template-columns:1fr}}
-
-/* roadmap */
-.road{list-style:none;margin:56px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);position:relative}
-.road::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line)}
-.road li{position:relative;padding:40px 24px 0 0}
-.road li::before{content:"";position:absolute;top:0;left:0;width:20px;height:20px;border-radius:50%;background:var(--bg);border:3px solid var(--plasma)}
-.road li:first-child::before{background:var(--plasma)}
-.road time{font-stretch:125%;font-weight:800;font-size:1.3rem;display:block;margin-bottom:6px}
-.road p{margin:0;color:var(--muted);font-size:1rem}
-@media (max-width:860px){.road{grid-template-columns:1fr;gap:28px}.road::before{left:9px;right:auto;top:0;bottom:0;width:2px;height:auto}.road li{padding:0 0 0 44px}}
-
-/* team */
-.team{display:grid;grid-template-columns:160px 1fr;gap:40px;align-items:start;margin-top:40px}
-.mono{width:160px;height:160px;border-radius:50%;border:3px solid var(--plasma);display:grid;place-items:center;font-stretch:125%;font-weight:800;font-size:3rem;color:var(--plasma)}
-.team h3{margin:0;font-size:1.5rem}
-.team .role{color:var(--data);margin:2px 0 16px}
-.team ul{margin:0 0 20px;padding-left:20px;color:var(--muted)}
-.team li{margin-bottom:6px}
-@media (max-width:640px){.team{grid-template-columns:1fr}.mono{width:120px;height:120px;font-size:2.2rem}}
-
-/* cta */
-.cta{text-align:left}
-.cta .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
-.stage{display:inline-block;margin-top:28px;padding:10px 16px;border-radius:12px;background:var(--plasma-soft);font-size:.95rem}
-
-footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-size:.9rem}
-footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
-footer a{color:var(--muted)}
-
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPRINT — research program of Star Truck Space</title>
+<meta name="description" content="SPRINT researches what fusion propulsion needs: D–T energy balance, the D–D cascade, checks against PLX and NIF data, and a GPU computing program.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect width='26' height='26' rx='6' fill='%2304070F'/%3E%3Ccircle cx='13' cy='13' r='6.5' fill='none' stroke='%233B6CF6' stroke-width='2'/%3E%3Ccircle cx='13' cy='13' r='2.6' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <a class="logo" href="#top" aria-label="Star Truck Space, home">
-      <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="2"/><circle cx="14" cy="14" r="7" fill="none" stroke="var(--plasma)" stroke-width="2"/><circle cx="14" cy="14" r="3" fill="var(--plasma)"/></svg>
-      Star Truck Space
-    </a>
-    <nav aria-label="Main">
-      <ul>
-        <li><a href="#solution">Solution</a></li>
-        <li><a href="#engine">Engine</a></li>
-        <li><a href="#technology">Technology</a></li>
-        <li><a href="#roadmap">Roadmap</a></li>
-        <li><a href="#team">Team</a></li>
-      </ul>
-    </nav>
-    <a class="btn btn-primary" href="#contact">Contact</a>
-  </div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="logo" href="index.html" aria-label="Star Truck Space home"><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11.5" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.6"/><circle cx="13" cy="13" r="6.5" fill="none" stroke="#3B6CF6" stroke-width="2"/><circle cx="13" cy="13" r="2.6" fill="currentColor"/></svg>Star Truck space</a>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="nav__link" href="index.html#program">Program</a>
+    <a class="nav__link" href="index.html#engine">Engine</a>
+    <a class="nav__link" href="index.html#principles">Principles</a>
+    <a class="btn btn--white" href="index.html#contact">Contact</a>
+  </nav>
 </header>
-
-<main id="top">
-  <div class="hero">
-    <canvas id="plasma" aria-hidden="true"></canvas>
-    <div class="wrap">
-      <h1 class="display">Weeks to Mars, not months.</h1>
-      <p class="lead">We build GPU-accelerated design tools for pulsed fusion engines: the propulsion that could make fast travel across the Solar System possible.</p>
-      <div class="actions">
-        <a class="btn btn-primary" href="#contact">Talk to us</a>
-        <a class="btn btn-ghost" href="#engine">See the engine</a>
-      </div>
-    </div>
+<section class="cover" data-parallax style="--pos:50% 50%;--pos-m:64% 50%">
+  <div class="cover__frame">
+    <div class="cover__media"><img src="assets/img/earth.webp" alt="" fetchpriority="high"></div>
+    <div class="cover__shade"></div>
   </div>
+  
+  <div class="cover__body">
+    <p class="eyebrow">Star Truck Space · SPRINT research program</p>
+    <h1>Pulsed fusion propulsion, modeled from first principles</h1>
+    <p class="sub">We model a single pulsed fusion engine with a magnetic nozzle, from the fusion burn to directed exhaust, and check our assumptions against published experimental data.</p>
+  </div>
+  <span class="scroll-cue" aria-hidden="true"></span>
+</section>
 
-  <section id="problem">
-    <div class="wrap">
-      <h2 class="display">Today’s rockets are too slow for the Solar System.</h2>
-      <p class="lead">Fusion propulsion could cut the trip to Mars from months to weeks. But every engine design has to be checked with plasma simulations that take hours per design point, and there are thousands of points to check.</p>
-      <div class="compare" role="img" aria-label="Chemical rockets take six to nine months to reach Mars; pulsed fusion aims for weeks.">
-        <div>
-          <div class="row-label"><strong>Chemical rockets</strong><span>6–9 months to Mars</span></div>
-          <div class="bar"><span class="chem"></span></div>
-        </div>
-        <div>
-          <div class="row-label"><strong>Pulsed fusion</strong><span>Weeks (our design goal)</span></div>
-          <div class="bar"><span class="fusion"></span></div>
-        </div>
-      </div>
-      <p class="note">The fusion figure is a design goal, not a demonstrated result.</p>
-    </div>
-  </section>
-
-  <section id="solution">
-    <div class="wrap">
-      <h2 class="display">From simulation to design in milliseconds.</h2>
-      <p class="lead">Physics simulations train AI models that answer engineering questions instantly, so engineers can explore thousands of engine variants and verify only the best.</p>
-      <ol class="steps">
-        <li><h3>Simulate</h3><p>Particle-in-cell runs of plasma expanding through a magnetic nozzle.</p></li>
-        <li><h3>Learn</h3><p>Physics-informed neural networks and neural operators train on the results.</p></li>
-        <li><h3>Predict</h3><p>Thrust, efficiency, plasma detachment and heat load in milliseconds.</p></li>
-        <li><h3>Design</h3><p>Search the design space, then confirm the best variants with full simulations.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section id="engine">
-    <div class="wrap">
-      <h2 class="display">The engine we design for.</h2>
-      <p class="lead">A pulsed fusion drive with a superconducting magnetic nozzle. Each pulse is a small, contained fusion event whose plasma is pushed out to make thrust.</p>
-      <div class="engine">
-        <figure class="engine-fig" style="margin:0">
-          <svg viewBox="0 0 560 320" role="img" aria-label="Schematic: ion beam from a storage ring ignites a compressed target; a magnetic nozzle shapes the exhaust; energy recovery coils recharge the system.">
-            <defs>
-              <radialGradient id="core" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="var(--glow)" stop-opacity="1"/><stop offset="1" stop-color="var(--glow)" stop-opacity="0"/></radialGradient>
-            </defs>
-            <!-- storage ring -->
-            <ellipse cx="90" cy="160" rx="54" ry="70" fill="none" stroke="var(--data)" stroke-width="3"/>
-            <path d="M144 160 H212" stroke="var(--data)" stroke-width="3" stroke-dasharray="6 5"/>
-            <!-- chamber + liner -->
-            <circle cx="250" cy="160" r="46" fill="none" stroke="var(--muted)" stroke-width="2"/>
-            <circle cx="250" cy="160" r="30" fill="none" stroke="var(--plasma)" stroke-width="3" stroke-dasharray="4 4"/>
-            <circle cx="250" cy="160" r="26" fill="url(#core)"/>
-            <!-- nozzle coils -->
-            <path d="M292 120 Q380 108 470 48" fill="none" stroke="var(--muted)" stroke-width="2"/>
-            <path d="M292 200 Q380 212 470 272" fill="none" stroke="var(--muted)" stroke-width="2"/>
-            <g fill="var(--surface)" stroke="var(--ink)" stroke-width="2">
-              <rect x="318" y="100" width="14" height="22" rx="3"/><rect x="318" y="198" width="14" height="22" rx="3"/>
-              <rect x="372" y="88" width="14" height="22" rx="3"/><rect x="372" y="210" width="14" height="22" rx="3"/>
-            </g>
-            <!-- field lines / exhaust -->
-            <g fill="none" stroke="var(--plasma)" stroke-width="1.6" stroke-opacity=".7">
-              <path d="M276 160 H540"/><path d="M276 150 Q400 140 540 104"/><path d="M276 170 Q400 180 540 216"/>
-              <path d="M276 142 Q390 118 520 60"/><path d="M276 178 Q390 202 520 260"/>
-            </g>
-            <!-- recovery coil -->
-            <rect x="430" y="140" width="22" height="40" rx="4" fill="none" stroke="var(--data)" stroke-width="2.5"/>
-            <!-- labels -->
-            <g font-family="Archivo, Arial, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">
-              <text x="90" y="252" text-anchor="middle">Ion storage ring</text>
-              <text x="250" y="230" text-anchor="middle">Plasma liner + target</text>
-              <text x="352" y="80" text-anchor="middle">Magnetic nozzle</text>
-              <text x="441" y="200" text-anchor="middle">Energy recovery</text>
-            </g>
-            <text x="540" y="300" text-anchor="end" font-family="Archivo, Arial, sans-serif" font-size="12" fill="var(--muted)">Concept schematic, not to scale</text>
-          </svg>
-        </figure>
-        <ul class="parts">
-          <li><h3><i></i>Plasma liner</h3><p>Compresses a deuterium target at the start of each pulse.</p></li>
-          <li><h3><i></i>Fast ion ignition</h3><p>A beam from a storage ring ignites the compressed fuel.</p></li>
-          <li><h3><i></i>Magnetic nozzle</h3><p>Superconducting coils shape the hot exhaust without touching it.</p></li>
-          <li><h3><i></i>Energy recovery</h3><p>Direct conversion recharges the system between pulses.</p></li>
+<main id="main">
+  <section class="section" id="program">
+    <div class="grid">
+      <p class="label">Research directions</p>
+      <div>
+        <h2 class="h2 reveal">Four workstreams, one question: is pulsed fusion propulsion viable?</h2>
+        <p class="lead reveal">Each workstream addresses an open problem that decides the answer, and separates established physics from working assumptions.</p>
+        <ul class="rows">
+      <li class="row"><a href="dt.html" data-i="0"><span class="row__n">01</span><span><span class="row__t">D–T energy balance</span><span class="row__s">Neutrons carry most of the D–T fusion energy and cannot be directed magnetically. We study how much of it a propellant liner can recover.</span><span class="row__tag">Core problem</span></span><span class="row__more">Learn more <span aria-hidden="true">→</span></span></a></li>
+      <li class="row"><a href="dd.html" data-i="1"><span class="row__n">02</span><span><span class="row__t">D–D cascade</span><span class="row__s">An advanced fuel cycle with abundant fuel and a larger charged-particle fraction, constrained by demanding ignition conditions</span><span class="row__tag">Advanced fuel cycle</span></span><span class="row__more">Learn more <span aria-hidden="true">→</span></span></a></li>
+      <li class="row"><a href="experiments.html" data-i="2"><span class="row__n">03</span><span><span class="row__t">Checking against experiments</span><span class="row__s">Published measurements from PLX and NIF used to constrain liner formation and per-shot fusion yield</span><span class="row__tag">Validation</span></span><span class="row__more">Learn more <span aria-hidden="true">→</span></span></a></li>
+      <li class="row"><a href="computing.html" data-i="3"><span class="row__n">04</span><span><span class="row__t">Computing program</span><span class="row__s">Energy-balance models today; GPU ensembles of plasma-jet implosions and neutron transport in the next phase</span><span class="row__tag">Simulation roadmap</span></span><span class="row__more">Learn more <span aria-hidden="true">→</span></span></a></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section id="technology">
-    <div class="wrap">
-      <h2 class="display">Built on GPU computing.</h2>
-      <p class="lead">Our workflow runs on NVIDIA GPUs, from a desk-side machine to supercomputers.</p>
-      <div class="tech">
-        <div><h3>WarpX on CUDA</h3><p>An open-source, exascale-ready particle-in-cell code generates our reference plasma simulations.</p></div>
-        <div><h3>PhysicsNeMo and PyTorch</h3><p>We train physics-informed surrogate models and neural operators on the simulation data.</p></div>
-        <div><h3>DGX Spark</h3><p>Local development, fine-tuning and fast iteration on surrogate models.</p></div>
-        <div><h3>Cloud and HPC GPUs</h3><p>Large parameter sweeps and multi-GPU training on cloud and European supercomputing resources.</p></div>
-      </div>
-    </div>
-  </section>
+  <div class="preview" aria-hidden="true"><img src="assets/img/dt.webp" alt=""><img src="assets/img/dd.webp" alt=""><img src="assets/img/experiments.webp" alt=""><img src="assets/img/computing.webp" alt=""></div>
 
-  <section id="roadmap">
-    <div class="wrap">
-      <h2 class="display">Roadmap.</h2>
-      <p class="lead">From a working pipeline to a validated design tool.</p>
-      <ol class="road">
-        <li><time>Q1 2027</time><p>Pipeline running on a local GPU; first WarpX datasets.</p></li>
-        <li><time>Q2 2027</time><p>First surrogate model trained on HPC and cloud GPUs.</p></li>
-        <li><time>H2 2027</time><p>Full design-space study and an open technical note.</p></li>
-        <li><time>2028</time><p>Pilot users in labs and startups; grant funding.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section id="team">
-    <div class="wrap">
-      <h2 class="display">Team.</h2>
-      <div class="team">
-        <img src="founder.jpg" alt="Igor Srebnitskiy" width="160" height="160" style="width:160px;height:160px;border-radius:50%;object-fit:cover;border:3px solid var(--plasma)">
-        <div>
-          <h3>Igor Srebnitskiy</h3>
-          <p class="role">Founder and project visionary</p>
-          <p>A technology enthusiast with deep roots in engineering and computing, Igor started Star Truck Space to answer one question: what would it take to cross the Solar System in weeks, not months?</p>
-          <p>He believes the next leap in spaceflight will come from joining fusion physics with modern GPU computing and AI, and that a small, focused team can now explore ideas that once needed a national laboratory.</p>
-          <p>We’re looking for a plasma physics advisor. <a href="mailto:igor@startruckspace.com?subject=Plasma%20physics%20advisor">Get in touch</a>.</p>
+  <section class="engine" id="engine">
+    <figure class="engine__card" style="margin:0 auto">
+      <img src="assets/img/craft.webp" alt="Concept illustration: a truss spacecraft with solar arrays and a single pulsed engine with a magnetic nozzle above Earth" loading="lazy">
+      <figcaption>Concept illustration · one engine, one magnetic nozzle</figcaption>
+    </figure>
+    <div class="grid engine__body">
+      <p class="label">Architecture</p>
+      <div>
+        <h2 class="h2 reveal">A single pulsed engine with a superconducting magnetic nozzle.</h2>
+        <p class="lead reveal">Each pulse compresses a fuel target to fusion conditions. Charged reaction products and heated propellant are expelled through the magnetic nozzle with no material contact. Compare the two fuel cycles under study.</p>
+        <div class="switch" data-switch role="group" aria-label="Fuel mode">
+          <button type="button" data-set="dt" aria-pressed="true">D–T</button>
+          <button type="button" data-set="dd" aria-pressed="false">D–D</button>
+        </div>
+        <div data-mode="dt">
+          <div class="stats">
+            <div class="stat"><b>Ignition demonstrated</b><span>The lowest-threshold fusion reaction; target ignition has been achieved at NIF</span><em>established</em></div>
+            <div class="stat"><b>Neutron-dominated output</b><span>Most of the energy is released as neutrons, which a magnetic field cannot direct</span><em>main challenge</em></div>
+            <div class="stat"><b>Tritium supply</b><span>Tritium is scarce and must be bred, typically from lithium</span><em>constraint</em></div>
+            <div class="stat"><b>Open question</b><span>The fraction of neutron energy the propellant can recover and transfer to the exhaust</span><em>under study</em></div>
+          </div>
+        </div>
+        <div data-mode="dd" hidden>
+          <div class="stats">
+            <div class="stat"><b>Abundant fuel</b><span>Deuterium is extracted from water; no external tritium supply is required</span><em>advantage</em></div>
+            <div class="stat"><b>Higher charged fraction</b><span>With full burn-up, charged products carry a larger share of the energy than in D–T</span><em>assumes full burn-up</em></div>
+            <div class="stat"><b>Demanding ignition</b><span>Requires substantially higher temperature and compression</span><em>main challenge</em></div>
+            <div class="stat"><b>Open question</b><span>The conditions under which the cascade reaches sufficient burn-up</span><em>not yet shown</em></div>
+          </div>
+        </div>
+        <ul class="notes">
+          <li>The comparison is qualitative at this stage. Quantitative performance figures will be released once they are supported by validated models and external review.</li>
+          <li>The model is constrained by published data from <a href="experiments.html#plx">PLX</a> and <a href="experiments.html#nif">NIF</a>. GPU simulations are the next stage of the program.</li>
+        </ul>
+        <div class="actions">
+          <a class="link" href="https://arxiv.org/abs/2401.11066" target="_blank" rel="noopener">PLX paper</a>
+          <a class="link" href="https://lasers.llnl.gov/science/icf/how-icf-works" target="_blank" rel="noopener">NIF results</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="cta">
-    <div class="wrap">
-      <h2 class="display">Partner with us.</h2>
-      <p class="lead">We’re talking to investors, research labs and programs that support deep-tech space ventures. Write to us for the pitch deck or a technical conversation.</p>
-      <div class="actions">
-        <a class="btn btn-primary" href="mailto:igor@startruckspace.com?subject=Pitch%20deck%20request">Request the pitch deck</a>
-        <a class="btn btn-ghost" href="mailto:igor@startruckspace.com">igor@startruckspace.com</a>
+  <section class="values" id="principles">
+    <div class="grid">
+      <p class="label">Methodology</p>
+      <div>
+        <h2 class="h2 reveal">A result is only as credible as the assumptions behind it.</h2>
+        <div class="cards">
+          <article class="card reveal"><h3>Full energy accounting</h3><p>Every unit of fusion energy is assigned to a destination: exhaust, neutron absorption, radiation or rejected heat. No losses are hidden in assumed efficiencies.</p></article>
+          <article class="card reveal"><h3>Explicit assumptions</h3><p>Each simplification is documented alongside the result that depends on it.</p></article>
+          <article class="card reveal"><h3>Experimental validation</h3><p>Models are benchmarked against measurements from operating facilities.</p></article>
+          <article class="card reveal"><h3>Reproducibility</h3><p>Methods and inputs are documented so that independent researchers can reproduce the results.</p></article>
+        </div>
       </div>
-      <p class="stage">Current stage: early R&amp;D, self-funded, based in Israel.</p>
     </div>
   </section>
+
+  <section class="life">
+    <div>
+      <p class="label">Approach</p>
+      <h2 class="h2 reveal">We address the decisive risks first and publish what we find.</h2>
+    </div>
+    <div class="life__rows">
+      <div class="life__row reveal"><small>01</small><h3>Critical risks first</h3><p>Neutron energy recovery and D–D ignition are studied before secondary design questions.</p></div>
+      <div class="life__row reveal"><small>02</small><h3>Traceable assumptions</h3><p>Every result can be traced to the inputs and simplifications it rests on.</p></div>
+      <div class="life__row reveal"><small>03</small><h3>Benchmarked against facilities</h3><p>Plasma-jet merging is benchmarked against PLX; per-shot D–T yield against NIF.</p></div>
+      <div class="life__row reveal"><small>04</small><h3>Open technical notes</h3><p>Findings are published with their methods after internal and external review.</p></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-bottom:0">
+    <div class="grid">
+      <p class="label">Founder</p>
+      <div class="founder reveal">
+        <img src="assets/img/founder.jpg" alt="Igor Srebnitskiy" width="140" height="140" style="border-radius:50%;object-fit:cover;width:140px;height:140px">
+        <div>
+          <h3 style="margin:0;font-size:1.5rem;font-weight:600">Igor Srebnitskiy</h3>
+          <p style="margin:4px 0 0;color:var(--blue);font-weight:600">Founder, Star Truck Space</p>
+          <p class="lead" style="margin-top:14px">Igor founded Star Truck Space to pursue fast interplanetary transport through fusion propulsion. A long-time technologist with deep roots in engineering and computing, he leads the program’s research direction and modeling work.</p>
+          <p class="lead">The program is seeking a plasma physics advisor. <a href="mailto:igor@startruckspace.com?subject=Plasma%20physics%20advisor">Get in touch</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="grid">
+      <p class="label">Partnerships</p>
+      <div>
+        <h2 class="h2 reveal">We are seeking partners for the next research phase.</h2>
+        <p class="lead reveal">SPRINT is currently self-funded and at an early research stage. Partnerships will fund GPU-based simulation, scientific advisory work and the publication of open technical notes.</p>
+        <div class="life__rows" style="margin-top:36px">
+          <div class="life__row reveal"><small>01</small><h3>Compute</h3><p>GPU time and cloud credits for plasma-jet ensembles and neutron-transport simulation.</p></div>
+          <div class="life__row reveal"><small>02</small><h3>Research collaboration</h3><p>Plasma physics groups to review the models and co-author technical notes.</p></div>
+          <div class="life__row reveal"><small>03</small><h3>Grants and investment</h3><p>Funding for the simulation phase and a small core research team.</p></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn--dark" href="mailto:igor@startruckspace.com?subject=SPRINT%20partnership">Get in touch <span class="arr" aria-hidden="true">→</span></a>
+          <a class="link" href="mailto:igor@startruckspace.com">igor@startruckspace.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
-
-<footer>
-  <div class="wrap">
-    <span>© 2026 Star Truck Space, Israel</span>
-    <span><a href="mailto:igor@startruckspace.com">igor@startruckspace.com</a></span>
+<footer class="footer">
+  <div class="footer__media" aria-hidden="true"><img src="assets/img/dd.webp" alt="" loading="lazy"></div>
+  <div class="footer__inner">
+    <p class="footer__claim">Star Truck Space<br><span style="font-size:.6em;font-weight:500;opacity:.8">Pulsed fusion propulsion research</span></p>
+    <div><h4>Program</h4><ul><li><a href="dt.html">D–T energy balance</a></li><li><a href="dd.html">D–D cascade</a></li><li><a href="experiments.html">Experiments</a></li><li><a href="computing.html">Computing</a></li></ul></div>
+    <div><h4>Project</h4><ul><li><a href="index.html#engine">Engine</a></li><li><a href="index.html#principles">Principles</a></li><li><a href="index.html#contact">Partner with us</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li><a href="mailto:igor@startruckspace.com">igor@startruckspace.com</a></li><li><a href="https://startruckspace.com">startruckspace.com</a></li></ul></div>
   </div>
+  <div class="footer__base"><span>© 2026 Star Truck Space · Israel</span><span>SPRINT research program</span></div>
 </footer>
-
-<script>
-(function(){
-  const cv=document.getElementById('plasma'); if(!cv) return;
-  const ctx=cv.getContext('2d');
-  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
-  let w=0,h=0,dpr=1,parts=[],t=0,raf=0;
-  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  function size(){
-    dpr=Math.min(window.devicePixelRatio||1,2);
-    w=cv.clientWidth; h=cv.clientHeight;
-    cv.width=w*dpr; cv.height=h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
-    const n=Math.round(Math.min(160,w/7));
-    parts=Array.from({length:n},()=>spawn(true));
-  }
-  function origin(){ return {x: w>760 ? w*0.62 : w*0.5, y: w>760 ? h*0.5 : h*0.9}; }
-  function spawn(any){
-    return {s: any?Math.random():0, k:(Math.random()*2-1), v:0.0015+Math.random()*0.003, r:0.8+Math.random()*1.6};
-  }
-  function draw(){
-    const o=origin(), plasma=css('--plasma'), glow=css('--glow'), data=css('--data');
-    ctx.clearRect(0,0,w,h);
-    const L=Math.max(w-o.x, w*0.35);
-    // field lines
-    ctx.lineWidth=1; ctx.strokeStyle=data; ctx.globalAlpha=0.18;
-    for(let i=-4;i<=4;i++){ ctx.beginPath(); for(let s=0;s<=1.001;s+=0.02){ const x=o.x+s*L, y=o.y+i*14*(1+6*s*s); s===0?ctx.moveTo(x,y):ctx.lineTo(x,y);} ctx.stroke(); }
-    // pulse rings
-    ctx.strokeStyle=plasma;
-    for(let j=0;j<3;j++){ const p=((t*0.004)+j/3)%1; ctx.globalAlpha=(1-p)*0.55; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(o.x,o.y,10+p*Math.min(w,h)*0.32,0,Math.PI*2); ctx.stroke(); }
-    // core
-    ctx.globalAlpha=1; const g=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,38); g.addColorStop(0,glow); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(o.x,o.y,38,0,Math.PI*2); ctx.fill();
-    // particles along field lines
-    ctx.fillStyle=plasma;
-    for(const p of parts){ const x=o.x+p.s*L, y=o.y+p.k*56*(1+6*p.s*p.s); ctx.globalAlpha=Math.max(0,0.9-p.s); ctx.beginPath(); ctx.arc(x,y,p.r,0,Math.PI*2); ctx.fill(); }
-    ctx.globalAlpha=1;
-  }
-  function step(){ t++; for(const p of parts){ p.s+=p.v; if(p.s>1){ Object.assign(p,spawn(false)); } } draw(); raf=requestAnimationFrame(step); }
-  function start(){ cancelAnimationFrame(raf); size(); if(reduce.matches){ draw(); } else { step(); } }
-  window.addEventListener('resize',start);
-  if(reduce.addEventListener) reduce.addEventListener('change',start);
-  const mq=window.matchMedia('(prefers-color-scheme: dark)'); if(mq.addEventListener) mq.addEventListener('change',draw);
-  start();
-})();
-</script>
+<script src="assets/js/site.js"></script>
 </body>
 </html>

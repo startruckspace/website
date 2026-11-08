@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D–D cascade — SPRINT</title>
+<meta name="description" content="The D–D cascade: no tritium stockpile, a larger share of energy in charged products, and the challenge of ignition.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect width='26' height='26' rx='6' fill='%2304070F'/%3E%3Ccircle cx='13' cy='13' r='6.5' fill='none' stroke='%233B6CF6' stroke-width='2'/%3E%3Ccircle cx='13' cy='13' r='2.6' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="logo" href="index.html" aria-label="Star Truck Space home"><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11.5" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.6"/><circle cx="13" cy="13" r="6.5" fill="none" stroke="#3B6CF6" stroke-width="2"/><circle cx="13" cy="13" r="2.6" fill="currentColor"/></svg>Star Truck space</a>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="nav__link" href="index.html#program">Program</a>
+    <a class="nav__link" href="index.html#engine">Engine</a>
+    <a class="nav__link" href="index.html#principles">Principles</a>
+    <a class="btn btn--white" href="index.html#contact">Contact</a>
+  </nav>
+</header>
+<section class="cover" data-parallax style="--pos:50% 50%;--pos-m:66% 50%">
+  <div class="cover__frame">
+    <div class="cover__media"><img src="assets/img/dd.webp" alt="" fetchpriority="high"></div>
+    <div class="cover__shade"></div>
+  </div>
+  <p class="cover__note">Concept illustration of the target</p>
+  <div class="cover__body">
+    <a class="back" href="index.html#program"><span aria-hidden="true">←</span> All directions</a>
+    <p class="eyebrow">SPRINT · 02</p>
+    <h1>D–D cascade</h1>
+    <p class="sub">An advanced fuel cycle without external tritium, and the conditions required to ignite it.</p>
+  </div>
+  <span class="scroll-cue" aria-hidden="true"></span>
+</section>
+
+<main id="main">
+  <section class="section">
+    <div class="grid">
+      <p class="label">Why D–D</p>
+      <div class="prose">
+        <h2 class="h2 reveal">Abundant fuel and a self-breeding cycle.</h2>
+        <p>Deuterium is found in ordinary water and can be extracted on board or at a refuelling point. The D–D cascade needs no tritium stockpile: tritium and helium-3 form inside the plasma and then burn together with the deuterium.</p>
+        <div class="table-wrap"><table class="table">
+          <tr><th>Reaction</th><th>Products</th><th>Role in the cascade</th></tr>
+          <tr><td>D + D</td><td>T + p</td><td>produces tritium</td></tr>
+          <tr><td>D + D</td><td>³He + n</td><td>produces helium-3</td></tr>
+          <tr><td>D + T</td><td>⁴He + n</td><td>burns the tritium</td></tr>
+          <tr><td>D + ³He</td><td>⁴He + p</td><td>burns the helium-3; all products are charged</td></tr>
+        </table></div>
+        <p>If the tritium and helium-3 burn completely, charged products carry a noticeably larger share of the energy than in D–T. <span class="assume">Assumption:</span> complete burn-up. In a real plasma some intermediate nuclei escape unburned, so the gain is smaller.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="grid">
+      <p class="label">Challenges</p>
+      <div class="prose">
+        <h2 class="h2 reveal">Barriers to ignition.</h2>
+        <ul class="notes">
+          <li>D–D reactions are much slower than D–T, so higher temperature and denser compression are needed.</li>
+          <li>The intermediate tritium and helium-3 must burn within the duration of a pulse.</li>
+          <li>The cascade needs a high pulse rate. Whether a single engine can reach it has not been shown.</li>
+          <li>There are fewer neutrons than in D–T, but they remain, so shielding is still needed.</li>
+        </ul>
+        <h3>Implications for mission performance</h3>
+        <p>Transit time depends on exhaust power, spacecraft mass and how completely the fuel burns. We will publish transit estimates only after the cascade model has been checked: a premature number here is easily misleading.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0"><div class="grid"><span></span><div><div class="next"><a class="link" href="index.html#program">← Back to all directions</a><a class="link" href="experiments.html">Checking against experiments →</a></div></div></div></section>
+</main>
+<footer class="footer">
+  <div class="footer__media" aria-hidden="true"><img src="assets/img/dd.webp" alt="" loading="lazy"></div>
+  <div class="footer__inner">
+    <p class="footer__claim">Star Truck Space<br><span style="font-size:.6em;font-weight:500;opacity:.8">Pulsed fusion propulsion research</span></p>
+    <div><h4>Program</h4><ul><li><a href="dt.html">D–T energy balance</a></li><li><a href="dd.html">D–D cascade</a></li><li><a href="experiments.html">Experiments</a></li><li><a href="computing.html">Computing</a></li></ul></div>
+    <div><h4>Project</h4><ul><li><a href="index.html#engine">Engine</a></li><li><a href="index.html#principles">Principles</a></li><li><a href="index.html#contact">Partner with us</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li><a href="mailto:igor@startruckspace.com">igor@startruckspace.com</a></li><li><a href="https://startruckspace.com">startruckspace.com</a></li></ul></div>
+  </div>
+  <div class="footer__base"><span>© 2026 Star Truck Space · Israel</span><span>SPRINT research program</span></div>
+</footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D–T energy balance — SPRINT</title>
+<meta name="description" content="Why most D–T fusion energy goes into neutrons and how the SPRINT model tests transferring that energy to the exhaust.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect width='26' height='26' rx='6' fill='%2304070F'/%3E%3Ccircle cx='13' cy='13' r='6.5' fill='none' stroke='%233B6CF6' stroke-width='2'/%3E%3Ccircle cx='13' cy='13' r='2.6' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="logo" href="index.html" aria-label="Star Truck Space home"><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11.5" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.6"/><circle cx="13" cy="13" r="6.5" fill="none" stroke="#3B6CF6" stroke-width="2"/><circle cx="13" cy="13" r="2.6" fill="currentColor"/></svg>Star Truck space</a>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="nav__link" href="index.html#program">Program</a>
+    <a class="nav__link" href="index.html#engine">Engine</a>
+    <a class="nav__link" href="index.html#principles">Principles</a>
+    <a class="btn btn--white" href="index.html#contact">Contact</a>
+  </nav>
+</header>
+<section class="cover" data-parallax style="--pos:50% 50%;--pos-m:74% 55%">
+  <div class="cover__frame">
+    <div class="cover__media"><img src="assets/img/dt.webp" alt="" fetchpriority="high"></div>
+    <div class="cover__shade"></div>
+  </div>
+  <p class="cover__note">Concept illustration of the engine</p>
+  <div class="cover__body">
+    <a class="back" href="index.html#program"><span aria-hidden="true">←</span> All directions</a>
+    <p class="eyebrow">SPRINT · 01</p>
+    <h1>D–T energy balance</h1>
+    <p class="sub">Neutrons carry most of the reaction energy. Recovering it as thrust is the central problem of this workstream.</p>
+  </div>
+  <span class="scroll-cue" aria-hidden="true"></span>
+</section>
+
+<main id="main">
+  <section class="section">
+    <div class="grid">
+      <p class="label">Established physics</p>
+      <div class="prose">
+        <h2 class="h2 reveal">Neutrons carry most of the D–T fusion energy.</h2>
+        <p>Deuterium–tritium fusion produces a helium nucleus (an alpha particle) and a neutron. About one fifth of the energy goes to the alpha particle and the rest to the neutron. This is textbook physics, not an assumption.</p>
+        <p>A magnetic nozzle can only steer charged particles. The neutron has no charge and passes straight through the field. So if only charged products feed the exhaust, the engine uses just a small part of the fusion energy.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="grid">
+      <p class="label">The model question</p>
+      <div class="prose">
+        <h2 class="h2 reveal">Recovering neutron energy in the propellant.</h2>
+        <p>In the SPRINT concept the target is surrounded by propellant in the form of a plasma liner. Some neutrons are absorbed there and heat it, and that heated, charged material leaves through the nozzle. The model has to show what share of the neutron energy the liner can actually capture and pass on to the exhaust.</p>
+        <div class="formula">exhaust power = nozzle efficiency × (alpha-particle energy + share of neutron energy captured by the propellant)</div>
+        <p>Whatever does not reach the exhaust does not vanish: neutrons that miss the liner heat the shield and coils, and radiation goes to the radiators. The model must account for every one of these terms.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="grid">
+      <p class="label">What we test</p>
+      <div class="prose">
+        <h2 class="h2 reveal">Parameters that determine the energy balance.</h2>
+        <div class="table-wrap"><table class="table">
+          <tr><th>Parameter</th><th>Status</th><th>What we test</th></tr>
+          <tr><td>Alpha-particle energy share</td><td>known</td><td>A tabulated value for D–T; not adjustable</td></tr>
+          <tr><td>Fusion yield per pulse</td><td>under study</td><td>Whether it is realistic at the given compression; NIF results are the benchmark</td></tr>
+          <tr><td>Pulse rate</td><td>under study</td><td>Whether target delivery and system recharge can keep up</td></tr>
+          <tr><td>Neutron capture by the propellant</td><td>key question</td><td>How much neutron energy the liner absorbs and how much goes to the shield</td></tr>
+          <tr><td>Magnetic nozzle efficiency</td><td>under study</td><td>What share of plasma energy becomes directed flow</td></tr>
+        </table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0"><div class="grid"><span></span><div><div class="next"><a class="link" href="index.html#program">← Back to all directions</a><a class="link" href="dd.html">D–D cascade →</a></div></div></div></section>
+</main>
+<footer class="footer">
+  <div class="footer__media" aria-hidden="true"><img src="assets/img/dd.webp" alt="" loading="lazy"></div>
+  <div class="footer__inner">
+    <p class="footer__claim">Star Truck Space<br><span style="font-size:.6em;font-weight:500;opacity:.8">Pulsed fusion propulsion research</span></p>
+    <div><h4>Program</h4><ul><li><a href="dt.html">D–T energy balance</a></li><li><a href="dd.html">D–D cascade</a></li><li><a href="experiments.html">Experiments</a></li><li><a href="computing.html">Computing</a></li></ul></div>
+    <div><h4>Project</h4><ul><li><a href="index.html#engine">Engine</a></li><li><a href="index.html#principles">Principles</a></li><li><a href="index.html#contact">Partner with us</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li><a href="mailto:igor@startruckspace.com">igor@startruckspace.com</a></li><li><a href="https://startruckspace.com">startruckspace.com</a></li></ul></div>
+  </div>
+  <div class="footer__base"><span>© 2026 Star Truck Space · Israel</span><span>SPRINT research program</span></div>
+</footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
