@@ -125,4 +125,34 @@
     });
   }
 
+
+  /* ---- 7. Engine video: plays once when the card is on screen ---- */
+  var vcard = document.querySelector('[data-video-card]');
+  if(vcard){
+    var vid = vcard.querySelector('video'), replay = vcard.querySelector('.replay');
+    var conn = navigator.connection || {};
+    var saveData = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || '');
+    if(vid && !reduce.matches && !saveData && 'IntersectionObserver' in window){
+      var loaded = false, played = false;
+      function load(){
+        if(loaded) return; loaded = true;
+        vid.querySelectorAll('source[data-src]').forEach(function(s){ s.src = s.getAttribute('data-src'); });
+        vid.preload = 'auto'; vid.load();
+      }
+      function play(){
+        var p = vid.play();
+        if(p && p.catch) p.catch(function(){ /* autoplay blocked: keep the still image */ });
+      }
+      vid.addEventListener('playing', function(){ vcard.classList.add('is-video'); replay.hidden = true; });
+      vid.addEventListener('ended', function(){ replay.hidden = false; });   /* stays on the last frame */
+      replay.addEventListener('click', function(){ vid.currentTime = 0; play(); });
+      var vo = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting && en.intersectionRatio >= 0.2) load();
+          if(en.isIntersecting && en.intersectionRatio >= 0.6 && !played){ played = true; play(); }
+        });
+      }, {threshold:[0, 0.2, 0.6]});
+      vo.observe(vcard);
+    }
+  }
 })();
