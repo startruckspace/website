@@ -54,9 +54,14 @@
   <div class="preview" aria-hidden="true"><img src="assets/img/dt.webp" alt=""><img src="assets/img/dd.webp" alt=""><img src="assets/img/experiments.webp" alt=""><img src="assets/img/computing.webp" alt=""></div>
 
   <section class="engine" id="engine">
-    <figure class="engine__card" style="margin:0 auto">
+    <figure class="engine__card" style="margin:0 auto" data-video-card>
       <img src="assets/img/craft.webp" alt="Concept illustration: a truss spacecraft with solar arrays and a single pulsed engine with a magnetic nozzle above Earth" loading="lazy">
-      <figcaption>Concept illustration · one engine, one magnetic nozzle</figcaption>
+      <video muted playsinline preload="none" aria-hidden="true" tabindex="-1">
+        <source data-src="assets/video/departure.webm" type="video/webm">
+        <source data-src="assets/video/departure.mp4" type="video/mp4">
+      </video>
+      <button class="replay" type="button" hidden>Replay <span aria-hidden="true">↻</span></button>
+      <figcaption>Concept animation · one engine, one magnetic nozzle</figcaption>
     </figure>
     <div class="grid engine__body">
       <p class="label">Architecture</p>
